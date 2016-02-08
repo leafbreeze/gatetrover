@@ -1,11 +1,11 @@
 <?php
 # ********************************************************** 
-# Project: Fierce Flagg
-# Description: PHP Website Scraping
+# Project: Gatetrover
 # Author: Kyle M. Bondo
-# Version: 0.15
-# Published: February 04, 2016
+# Description: Application for collecting G.I.Joe comicbooks
 # GitHub Remote Repo: https://github.com/leafbreeze/gatetrover
+# Last Update: 06 Feb 2016
+# Version: 0.2 
 # ********************************************************** 
 
 # Include the library
@@ -95,6 +95,7 @@ if (APP_STATE == 0) {
 
 
 
+
 # **********************************************************
 # BUILD HEADER
 # **********************************************************
@@ -147,28 +148,72 @@ if ($bookHeaders != "") {
 # start frontpage HTML
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html class="no-js" lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Mile High Comics Scraper</title>
-    <link href="main.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <!--[if IE]> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <![endif]-->
+    <title>GATETROVER | DOMXpath Experiement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="author" content="Trenchbucket">
+    <meta name="Description" content="GATETROVER | Phase One" />
+    <!-- CSS Styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="css/styles.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="css/responsive-mobilefirst.css" rel="stylesheet" type="text/css" media="screen" />
+    <!-- Google Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,400italic,600" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,600,700" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-    <div class="wrapper">
-    	<h1>Project FIERCE FLAGG v0.15</h1>
-        <h2>Publisher: <?php echo $bookPublisher ?><br />
-        Title: <?php echo $bookTitle ?><br />
-        Total Number of Pages: <?php echo $pageTotal ?></h2>
+<!-- preloader -->
+<div id="preloader">
+  <div id="status">
+    <div class="parent">
+      <div class="child">
+        <p class="small">loading</p>
+      </div>
     </div>
+  </div>
+</div>
+<!-- end preloader -->
 
-<table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+<div id="background-color"></div>
 
-    <!-- Table Header -->
-    <thead>
-        <?php echo $dictBookHeaders; ?>
-    </thead>
-    <!-- Table Header -->
+<!-- Old School Table - Because it's maps to the source data right now -->
+<!-- TODO: Maybe rebuild using tabless div layout like the launcher -->
+
+<div id="content">
+    <!-- begin #container -->
+    <div id="container" class="clearfix">
+    
+        <!-- Small Box 1-1 -->
+        <div class="element  clearfix col1-3 home grey with-link"><a href="index.php" target="_parent" class="whole-tile"></a>
+            <h3>Back</h3><p>Back to the Launcher.</p>
+            <div class="bottom"> <span class="button">Go Back</span></div>
+            <div class="icon-placer"><i class="fa fa-external-link"></i></div>
+        </div>  
+        
+    </div>  
+    
+    <div id="container" class="clearfix">
+    <div class="wrapper">
+        <h2>GATETROVER G.I.Joe App MVP v0.2</h2>
+        <h3>Publisher: <?php echo $bookPublisher ?><br />
+        Title: <?php echo $bookTitle ?><br />
+        Total Number of Pages: <?php echo $pageTotal ?></h3>
+	</div>
+
+	<table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
+
+        <!-- Table Header -->
+        <thead>
+            <?php echo $dictBookHeaders; ?>
+        </thead>
+        <!-- Table Header -->
 
 <?
 	
@@ -522,12 +567,30 @@ $finish = $time;
 $totalTime = round(($finish - $start), 4);
 ?>
 
-<div class="wrapper">
-	<h2>Cell Count: <?php echo $cellCount ?> (Number of Cells Shown)</h2>
-    <h2>Row Count: <?php echo $rowCount ?> (Number of Rows Shown)</h2>
-    <h2>Image Count: <?php echo $imageTotal ?> (Number of Cover Images Shown)</h2>
-    <h2>Total Execution Time: <?php echo $totalTime ?> (Seconds)</h2>
+    <!-- end #container -->
+  
+    <footer>
+        <div class="wrapper">
+            <h3>Cell Count: <?php echo $cellCount ?> (Number of Cells Shown)</h3>
+            <h3>Row Count: <?php echo $rowCount ?> (Number of Rows Shown)</h3>
+            <h3>Image Count: <?php echo $imageTotal ?> (Number of Cover Images Shown)</h3>
+            <h3>Total Execution Time: <?php echo $totalTime ?> (Seconds)</h3>
+        </div>    
+    
+        <ul class="social-list clearfix">
+            <li> <a href="https://github.com/leafbreeze" target="_blank"><i class="fa fa-github"></i></a></li>
+            <li> <a href="http://www.milehighcomics.com/cgi-bin/backissue.cgi?action=list&title=35490175336&publisher=MV&snumber=1&instock=0"><i class="fa fa-book" target="_blank"></i></a> </li>
+        </ul>
+    </footer>
 </div>
 
+
+
+<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="js/jquery.isotope2.min.js" type="text/javascript"></script> 
+<script src="js/packery-mode.pkgd.min.js" type="text/javascript"></script>
+<script src="js/jquery.isotope.load.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/preloader.js" type="text/javascript"></script> 
 </body>
 </html>

@@ -1,0 +1,38 @@
+@charset "utf-8";
+
+	#content { width:1320px; padding-left:40px; }
+	header { position:absolute; padding-top:55px; top:0; z-index:101 }
+	#menu-button {display:table; float:left; }
+	.logo-wrapper {position:relative; z-index:101; top:auto; left:auto; padding:0px; float:left; margin-bottom:25px; }
+	h1#logo {float:left; margin-left:25px; }
+	.tagline { padding-left:16px; }
+
+
+@media only screen and (max-width: 1360px) {
+	#content { width:990px; padding-left:30px; }
+	.col4-3 { width:940px; }
+}
+
+@media only screen and (max-width: 992px) {
+	#content { width:680px; padding-left:30px; }
+	.col3-3, .col4-3 { width:620px; height:auto; }
+}
+
+@media only screen and (max-width: 767px) {
+	#content { width:320px; padding-left:0px; margin:0 auto; position:relative; }
+	.col2-3, #map { width:300px; height:280px; }
+	.col3-3, .col4-3, .col2-3, .col2-3.half { width:300px; height:auto; }
+	.col2-3.grey { padding:17px 35px; height:auto }
+	h2 { font-size:26px; font-weight:400; margin-top:10px; line-height:1.3; letter-spacing:0 }
+	.col2-3 .button { margin-top:5px; }
+	.element .parent { -webkit-text-shadow: 0px 0 30px rgba(0, 0, 0, 0.4); text-shadow: 0px 0 30px rgba(0, 0, 0, 0.4); }
+	.col2-3 .parent { width:300px; height:280px; }
+	.col2-3 .child { padding:35px; }
+	.child h3 { font-size:19px; }
+}
+
+@media only screen and (max-width: 480px) {
+	/*#content { width:320px; padding-left:0; }*/
+	.flexslider .caption { position:absolute; right:35px; bottom:18px; }
+	.element { margin-bottom:0 !important }
+}
