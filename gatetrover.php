@@ -4,8 +4,8 @@
 # Author: Kyle M. Bondo
 # Description: Application for collecting G.I.Joe comicbooks
 # GitHub Remote Repo: https://github.com/leafbreeze/gatetrover
-# Last Update: 06 Feb 2016
-# Version: 0.2 
+# Last Update: 10 Feb 2016
+# Version: 0.2.1 
 # ********************************************************** 
 
 # Include the library
@@ -43,30 +43,39 @@ function dlPage($href) {
 # **********************************************************
 # DEFINE CONSTANTS
 # **********************************************************
+# Constansts are constant. Variables are variable. Nuff said. Excelsior!
+define('APP_STATE', 0); // 0 = DEV, 1 = TEST
+
+# **********************************************************
+# set application state
+if (APP_STATE == 0) {
+	# Target URL = G.I.Joe (Page 1) - START
+	$originURL = 'http://www.milehighcomics.com/cgi-bin/backissue.cgi?action=list&title=35490175336&publisher=MV&snumber=1&instock=0';
+} else if (APP_STATE == 1) {
+	# Test URL = Avengers (Page 1) - START TEST
+	$originURL = 'http://www.milehighcomics.com/cgi-bin/backissue.cgi?action=list&title=06386089740&snumber=1';
+}
+# **********************************************************
+
+# Mile High Comics URLs 
 define('ROOT_URL', 'http://www.milehighcomics.com');
 define('CGI_URL', 'http://www.milehighcomics.com/cgi-bin/backissue.cgi?');
 define('IMAGE_URL', 'http://image2.milehighcomics.com/istore/thumbnails/');
-define('ACTION', 'list'); 
-define('TITLE', 35490175336);
-define('PUBLISHER', 'MV');
-define('INSTOCK', 0);
-
-# KNOWN CONSTANTS
-define('START_NUMBER', 1);
-define('ROWS_PER_PAGE', 20);
 
 
-# DEV STATE CONSTANTS
-define('APP_STATE', 0); // 0 = DEV, 1 = TEST
+
+# Parsed CGI variables
+$actionGate = 'list';		// list, enlarge, fullsize, bibliography, page1, page2, page3
+$titleGate = 35490175336;	// Book Title serial number
+$publisherGate = 'MV';		// MV = Marvel, DC = DC Comics
+$snumberGate = 1;			// page start id - Incriments by 20's (ex: 1, 21, 41, 61, ...)
+$instockGate = 0;			// 0 = Show All Issues (default), 1 = Show Instock-Only
+$rowsPerPage = 20;			// Default number of rows each page displays
 
 
-if (APP_STATE == 0) {
-	# Target URL = G.I.Joe (Page 1) - START
-	$headerUrl = 'http://www.milehighcomics.com/cgi-bin/backissue.cgi?action=list&title=35490175336&snumber=1';
-} else if (APP_STATE == 1) {
-	# Test URL = Avengers (Page 1) - START TEST
-	$headerUrl = 'http://www.milehighcomics.com/cgi-bin/backissue.cgi?action=list&title=06386089740&snumber=1';
-}
+
+
+// $headerUrl = CGI_URL . 'action=' . ACTION . '&title=' . TITLE . '&snumber=' . START_NUMBER . '&instock=' . INSTOCK;
 
 # Each page is an incriment of 20 (snumber)
 # G.I.Joe by Marvel Comics shows approx. 356 database records, creating 19 dynamic links/pages
@@ -74,24 +83,22 @@ if (APP_STATE == 0) {
 
 # Find all the records available
 
-	# find the snumber in the CGI URL string
-	# Initial snumber = 1
-	# Rows per page = 20
-	# Page shows 20 items starting with #1
-	# Last snumber = 361
-	# 361 / 20 = 18.05
-	# Real Last snumber = 361 + 20 = 381
-	# 381 / 20 = 19.05
-	# Equation: [(last snumber) + ((Rows per page) - 1)] / Rows per page = Total Pages Available
+# find the snumber in the CGI URL string
+# Initial snumber = 1
+# Rows per page = 20
+# Page shows 20 items starting with #1
+# Last snumber = 361
+# 361 / 20 = 18.05
+# Real Last snumber = 361 + 20 = 381
+# 381 / 20 = 19.05
+# Equation: [(last snumber) + ((Rows per page) - 1)] / Rows per page = Total Pages Available
 
 
-	# Now point the code towards the target URL
-	# Target URL = G.I.Joe (Page 1) - START
+# Now point the code towards the target URL
+# Target URL = G.I.Joe (Page 1) - START
 // $headerUrl = 'http://www.milehighcomics.com/cgi-bin/backissue.cgi?action=list&title=35490175336&snumber=1';
-	# Test URL = Avengers (Page 1) - START TEST
-	// $headerUrl = 'http://www.milehighcomics.com/cgi-bin/backissue.cgi?action=list&title=06386089740&snumber=1';	
-
-
+# Test URL = Avengers (Page 1) - START TEST
+// $headerUrl = 'http://www.milehighcomics.com/cgi-bin/backissue.cgi?action=list&title=06386089740&snumber=1';	
 
 
 
@@ -102,7 +109,7 @@ if (APP_STATE == 0) {
 # You need the initial url to set up the page
 # It only needs to run once to build the headers
 
-$data = dlPage($headerUrl);
+$data = dlPage($originURL);
 
 # find publisher name - unique row
 foreach($data->find('td[colspan="5"]') as $bookPublisher) {
@@ -231,16 +238,16 @@ unset($data);
 # Now run the page builder without the need for all the headers
 
 # body build vars
-// $startNumber = 1;
 $landryList = 1; //Show Total Number of Target Pages on one screen (1 to 19 for Marvel's G.I.Joe)
-$builderUrl = '';
+$builderURL = '';
 $imageTotal = 0;
 $rowCount = 0;
 $cellCount = 0;
 
 	for ($s = 0; $s < $landryList; $s++) {
 	
-		$builderUrl = CGI_URL . 'action=' . ACTION . '&title=' . TITLE . '&snumber=' . START_NUMBER . '&instock=' . INSTOCK;
+		// $builderUrl = CGI_URL . 'action=' . ACTION . '&title=' . TITLE . '&snumber=' . SNUMBER . '&instock=' . INSTOCK;
+		// $builderURL = $originURL
 	
 		## CGI URL GET Request Analysis ##
 		# ACTION = GET form field that request which HTML template the database will use to display records (e.g. list)
@@ -255,7 +262,7 @@ $cellCount = 0;
 		# Need a better way to filter results and link to other lists that does not include metadata artifacts
 		
 		# create an object using our requested url
-		$data = dlPage($builderUrl);
+		$data = dlPage($originURL);
 	
 		# find out how many td tags there are with align="CENTER"
 		# SAMPLE OUTPUT: 1 Page => 20 Rows * 8 Cols = 160 Cells
