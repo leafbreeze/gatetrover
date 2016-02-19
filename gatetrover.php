@@ -222,7 +222,7 @@ if ($bookHeaders != "") {
         </thead>
         <!-- Table Header -->
 
-<?
+<?php
 	
 $data->clear();
 unset($data);
@@ -230,7 +230,7 @@ unset($data);
 ?>
     <!-- table body -->
     <tbody>
-<?
+<?php
 		
 # **********************************************************
 # BUILD BODY
@@ -565,7 +565,7 @@ $cellCount = 0;
 </table>
 <!-- end table -->
 
-<?
+<?php
 # stop calculating page load time - show results in seconds
 $time = microtime();
 $time = explode(' ', $time);
